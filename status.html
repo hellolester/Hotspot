@@ -1,0 +1,112 @@
+<html>
+<head>
+
+$(if refresh-timeout)
+<meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+$(endif)
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<title>Connection Status</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="main">
+<div class="wrap">
+
+<!-- BRAND HEADER -->
+
+<div class="brand">
+
+<img src="img/logo.png" class="brand-logo">
+
+<h2 class="brand-name">OIConnect WiFi</h2>
+
+<p class="brand-desc">
+Community internet for everyone.<br>
+Fast, affordable, roaming‑ready.
+</p>
+</div>
+
+
+<!-- USER GREETING -->
+
+$(if login-by == 'trial')
+<h2 class="user-greet">Hi, Trial User!</h2>
+
+$(elif login-by != 'mac')
+<h2 class="user-greet">Hi, $(username)!</h2>
+<span style="display:none" id="user">$(username)</span>
+$(endif)
+
+
+<form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+
+<table class="status-table">
+
+<tr>
+<td>IP Address</td>
+<td>$(ip)</td>
+</tr>
+
+<tr>
+<td>MAC Address</td>
+<td>$(mac)</td>
+</tr>
+
+<tr>
+<td>Data Used</td>
+<td>$(bytes-in-nice) / $(bytes-out-nice)</td>
+</tr>
+
+$(if remain-bytes-total)
+<tr>
+<td>Data Remaining</td>
+<td>$(remain-bytes-total-nice)</td>
+</tr>
+$(endif)
+
+$(if session-time-left)
+<tr>
+<td>Connected / Remaining</td>
+<td>
+<span id="upt1">$(uptime)</span> /
+<span id="stl">$(session-time-left)</span>
+</td>
+</tr>
+$(else)
+<tr>
+<td>Connected Time</td>
+<td><span id="upt2">$(uptime)</span></td>
+</tr>
+$(endif)
+
+<tr>
+<td>Expiration</td>
+<td>
+<iframe id="exp" frameborder="0" scrolling="no" src="about:blank"></iframe>
+</td>
+</tr>
+
+</table>
+
+$(if login-by-mac != 'yes')
+<input type="submit" value="Log Out" class="logout-btn">
+$(endif)
+
+</form>
+
+</div>
+</div>
+
+<script src="conf.js"></script>
+
+</body>
+</html>
